@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.fajarachmad</groupId>
+		<artifactId>ff-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>ff-common</artifactId>
+	<name>Common Module</name>
+	<description>Common Module</description>
+	<packaging>jar</packaging>
+	
+	<properties>
+		<db.driverClassName>org.h2.Driver</db.driverClassName>
+		<db.url>jdbc:h2:~/test</db.url>
+		<db.username>sa</db.username>
+		<db.password></db.password>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- This plugin is used to execute SQL statements -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.3</version>
+
+				<!-- Database driver -->
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>${h2.version}</version>
+					</dependency>
+				</dependencies>
+
+				<configuration>
+					<driver>${db.driverClassName}</driver>
+					<url>${db.url}</url>
+					<username>${db.username}</username>
+					<password>${db.password}</password>
+					<settingsKey>sensibleKey</settingsKey>
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>create-schema</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>${basedir}/src/main/resources/sql/00-init-schema.sql</srcFile>
+								<srcFile>${basedir}/src/main/resources/sql/01-create-table.sql</srcFile>
+								<srcFile>${basedir}/src/main/resources/sql/02-init-data.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

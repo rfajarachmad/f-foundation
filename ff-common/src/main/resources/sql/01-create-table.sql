@@ -1,0 +1,20 @@
+SET SCHEMA Central;
+
+DROP TABLE IF EXISTS Lookup;
+
+CREATE TABLE Lookup(
+	LookupGUID VARCHAR(50) PRIMARY KEY, 
+	Type VARCHAR(50),
+	Code VARCHAR(50),
+	Name VARCHAR(100),
+	Val1 VARCHAR(50),
+	Val2 VARCHAR(50),
+	Val3 VARCHAR(50),
+	Val4 VARCHAR(50),
+	Val5 VARCHAR(50),
+	RecordStatus INT,
+	CreatedBy VARCHAR(50),
+	CreationDate DATE,
+	LastUpdatedBy VARCHAR(50),
+	LastUpdateDate DATE
+)
