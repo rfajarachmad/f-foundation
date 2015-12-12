@@ -1,5 +1,7 @@
 package net.fajarachmad.security.service.impl;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -32,7 +34,7 @@ public class TenantServiceImpl implements TenantService{
 	
 	@Override
 	@Transactional
-	public Tenant createTenant(Registration registration) {
+	public Tenant createTenant(@Valid Registration registration) {
 		logger.debug("Creating new tenant, tenantName {}", new Object[]{ registration.getTenantName() });
 		Tenant tenant = new Tenant();
 		BeanUtils.copyProperties(registration, tenant);

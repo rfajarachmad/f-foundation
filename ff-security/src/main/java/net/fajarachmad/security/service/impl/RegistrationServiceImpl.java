@@ -1,5 +1,7 @@
 package net.fajarachmad.security.service.impl;
 
+import javax.validation.Valid;
+
 import net.fajarachmad.security.dao.RegistrationDAO;
 import net.fajarachmad.security.model.Registration;
 import net.fajarachmad.security.model.Tenant;
@@ -10,6 +12,7 @@ import net.fajarachmad.security.service.UserSevice;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService{
@@ -23,6 +26,7 @@ public class RegistrationServiceImpl implements RegistrationService{
 	@Autowired
 	private TenantService tenantService;
 	
+	@Transactional
 	@Override
 	public User registerTenant(Registration registration) {
 		//Step 1 Insert to Registration
@@ -36,9 +40,10 @@ public class RegistrationServiceImpl implements RegistrationService{
 		return user;
 		
 	}
-
+	
+	@Transactional
 	@Override
-	public String save(Registration registration) {
+	public String save(@Valid Registration registration) {
 		return registrationDAO.insert(registration);
 	}
 

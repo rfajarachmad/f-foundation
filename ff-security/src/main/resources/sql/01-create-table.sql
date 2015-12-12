@@ -9,11 +9,11 @@ CREATE TABLE Role(
 	Code VARCHAR(50),
 	Name VARCHAR(50),
 	Description VARCHAR(50),
-	IsInitialRole INT DEFAULT(0),
+	IsInitialRole boolean,
 	RecordStatus INT,
 	CreatedBy VARCHAR(50),
 	CreationDate DATE,
-	LastUpdateadBy VARCHAR(50),
+	LastUpdatedBy VARCHAR(50),
 	LastUpdateDate DATE
 );
 
@@ -21,13 +21,13 @@ CREATE TABLE User(
 	UserGUID VARCHAR(50) PRIMARY KEY, 
 	Username VARCHAR(50),
 	Password VARCHAR(50),
-	SoureceGUID VARCHAR(50),
-	SourceType INT,
+	SourceGUID VARCHAR(50),
+	SourceTypeId INT,
 	TenantGUID VARCHAR(50),
 	RecordStatus INT,
 	CreatedBy VARCHAR(50),
 	CreationDate DATE,
-	LastUpdateadBy VARCHAR(50),
+	LastUpdatedBy VARCHAR(50),
 	LastUpdateDate DATE
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE Registration (
 	RecordStatus INT,
 	CreatedBy VARCHAR(50),
 	CreationDate DATE,
-	LastUpdateadBy VARCHAR(50),
+	LastUpdatedBy VARCHAR(50),
 	LastUpdateDate DATE
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE Menu (
 	RecordStatus INT,
 	CreatedBy VARCHAR(50),
 	CreationDate DATE,
-	LastUpdateadBy VARCHAR(50),
+	LastUpdatedBy VARCHAR(50),
 	LastUpdateDate DATE
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE Tenant (
 	RecordStatus INT,
 	CreatedBy VARCHAR(50),
 	CreationDate DATE,
-	LastUpdateadBy VARCHAR(50),
+	LastUpdatedBy VARCHAR(50),
 	LastUpdateDate DATE
 );
 

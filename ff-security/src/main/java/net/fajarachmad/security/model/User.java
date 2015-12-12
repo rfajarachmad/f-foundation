@@ -41,12 +41,10 @@ public class User extends CommonEntity{
 	private String userGUID;
 	
 	@NotNull
-	@Max(value=50)
 	@Column(name="Username")
 	private String username;
 	
 	@NotNull
-	@Max(value=100)
 	@Column(name="Password")
 	private String password;
 	

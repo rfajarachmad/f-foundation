@@ -33,23 +33,19 @@ public class Registration extends CommonEntity{
 	
 	@Column(name="TenantName")
 	@NotBlank
-	@Max(50)
 	private String tenantName;
 	
 	@Column(name="Email")
 	@Email
 	@NotBlank
-	@Max(50)
 	private String email;
 	
 	@Column(name="Username")
 	@NotBlank
-	@Max(50)
 	private String username;
 	
 	@Column(name="Password")
 	@NotBlank
-	@Max(100)
 	private String password;
 	
 	@Transient

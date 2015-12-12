@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserSevice{
@@ -28,8 +29,9 @@ public class UserServiceImpl implements UserSevice{
 	
 	@Autowired
 	private RoleDAO roleDAO;
-
+	
 	@Override
+	@Transactional
 	public User createUserRegistration(Registration registration) {
 		logger.debug("Creating user registration, registrationGUID {}", new Object[]{registration.getRegistrationGUID()});
 		User user = new User();
@@ -45,8 +47,9 @@ public class UserServiceImpl implements UserSevice{
 		return user;
 	}
 	
+	@Transactional(readOnly=true)
 	private List<Role> getDefaultRole() {
-		List<Role> defaultRoles = roleDAO.findByCriteria(Restrictions.eq("isInitialRole", true),
+		List<Role> defaultRoles = roleDAO.findByCriteria(Restrictions.eq("initialRole", true),
 				Restrictions.eq("recordStatus", RecordStatus.ACTIVE.getValue()));
 		return defaultRoles;
 	}
