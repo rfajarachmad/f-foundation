@@ -2,11 +2,14 @@ package net.fajarachmad.common.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import net.fajarachmad.common.model.CommonEntity;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractDAO<T extends CommonEntity, ID extends Serializable> implements CommonDAO<T, ID> {
@@ -39,6 +42,16 @@ public abstract class AbstractDAO<T extends CommonEntity, ID extends Serializabl
 	@SuppressWarnings("unchecked")
 	public T findById(ID id) {
 		return (T) getCurrentSession().get(genericType, id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<T> findByCriteria(Criterion... criterions) {
+		Criteria criteria = getCurrentSession().createCriteria(genericType);
+        for (Criterion criterion : criterions) {
+            criteria.add(criterion);
+        }
+        return criteria.list();
 	}
 	
 	protected Session getCurrentSession() {

@@ -20,9 +20,9 @@ public class UserWs {
 	@Path("/find")
 	public Response getUserById() {
 
-		User result = userSeviceImpl.findById("re");
+		//User result = userSeviceImpl.findById("re");
 
-		return Response.status(200).entity(result).build();
+		return Response.status(200).entity("").build();
 
 	}
 

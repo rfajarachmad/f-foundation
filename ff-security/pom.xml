@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.fajarachmad</groupId>
-			<artifactId>common</artifactId>
+			<artifactId>ff-common</artifactId>
 			<version>1.0</version>
 		</dependency>
 		

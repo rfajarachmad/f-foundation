@@ -12,8 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 import net.fajarachmad.common.model.CommonEntity;
 
 @Entity
-@Table(name="Tenant", schema="Central")
-public class Tenant extends CommonEntity {
+@Table(name="Menu", schema="Central")
+public class Menu extends CommonEntity{
 	
 	/**
 	 * 
@@ -23,9 +23,9 @@ public class Tenant extends CommonEntity {
 	@Id
 	@GeneratedValue(generator = "uuid")
 	@GenericGenerator(name = "uuid", strategy = "uuid")
-	@Column(name="TenantGUID")
+	@Column(name="MenuGUID")
 	@NotNull
-	private String tenantGUID;
+	private String menuGUID;
 	
 	@Column(name="Code")
 	private String code;
@@ -33,21 +33,15 @@ public class Tenant extends CommonEntity {
 	@Column(name="Name")
 	private String name;
 	
-	@Column(name="DbHostname")
-	private String dbHostname;
-	
-	@Column(name="DbUsername")
-	private String dbUsername;
-	
-	@Column(name="DbPassword")
-	private String dbPassword;
+	@Column(name="Path")
+	private String path;
 
-	public String getTenantGUID() {
-		return tenantGUID;
+	public String getMenuGUID() {
+		return menuGUID;
 	}
 
-	public void setTenantGUID(String tenantGUID) {
-		this.tenantGUID = tenantGUID;
+	public void setMenuGUID(String menuGUID) {
+		this.menuGUID = menuGUID;
 	}
 
 	public String getCode() {
@@ -66,31 +60,13 @@ public class Tenant extends CommonEntity {
 		this.name = name;
 	}
 
-	public String getDbHostname() {
-		return dbHostname;
+	public String getPath() {
+		return path;
 	}
 
-	public void setDbHostname(String dbHostname) {
-		this.dbHostname = dbHostname;
+	public void setPath(String path) {
+		this.path = path;
 	}
-
-	public String getDbUsername() {
-		return dbUsername;
-	}
-
-	public void setDbUsername(String dbUsername) {
-		this.dbUsername = dbUsername;
-	}
-
-	public String getDbPassword() {
-		return dbPassword;
-	}
-
-	public void setDbPassword(String dbPassword) {
-		this.dbPassword = dbPassword;
-	}
-	
-	
 	
 	
 }
