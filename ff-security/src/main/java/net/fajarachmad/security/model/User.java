@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import net.fajarachmad.common.model.CommonEntity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 
 /**
@@ -56,10 +59,12 @@ public class User extends CommonEntity{
 	
 	@ManyToOne
 	@JoinColumn(name="TenantGUID")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Tenant Tenant;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="UserRole", 
+	@ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinTable(name="UserRole", schema="central", 
 		joinColumns={ @JoinColumn(name="UserGUID")}, 
 		inverseJoinColumns={ @JoinColumn(name="RoleGUID")})
 	private List<Role> roles;

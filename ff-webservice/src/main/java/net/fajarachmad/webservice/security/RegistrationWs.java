@@ -2,6 +2,7 @@ package net.fajarachmad.webservice.security;
 
 import java.util.Date;
 
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -41,9 +42,12 @@ public class RegistrationWs {
 			
 			User user = registrationService.registerTenant(model);
 			return ResponseUtil.createResponseSuccess(user);
-		} catch (Exception e) {
-			logger.error("Error", e);
-			return Response.status(500).entity(e.getMessage()).build();
+		} catch (ConstraintViolationException e) {
+			logger.info(e.getMessage());
+			return ResponseUtil.createResponseError(400, model, e.getConstraintViolations());
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return ResponseUtil.createResponseError(500, model, e.getMessage());
 		}
 		
 	}

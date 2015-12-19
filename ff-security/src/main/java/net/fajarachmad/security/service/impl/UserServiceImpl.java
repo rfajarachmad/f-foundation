@@ -2,6 +2,8 @@ package net.fajarachmad.security.service.impl;
 
 import java.util.List;
 
+import javax.naming.AuthenticationException;
+
 import net.fajarachmad.common.constant.RecordStatus;
 import net.fajarachmad.security.constant.UserSourceType;
 import net.fajarachmad.security.dao.RoleDAO;
@@ -54,7 +56,23 @@ public class UserServiceImpl implements UserSevice{
 		return defaultRoles;
 	}
 	
-	
+	@Override
+	@Transactional(readOnly=true)
+	public User authenticate(String username, String password) throws AuthenticationException {
+		
+		List<User> users = userDAO.findByCriteria(Restrictions.eq("username", username));
+		
+		if (!users.isEmpty()) {
+			User user = users.get(0);
+			if (user.getPassword().equals(password)) {
+				return user;
+			} else {
+				throw new AuthenticationException("username and password are not correct");
+			}
+		} else {
+			throw new AuthenticationException("User is not registered for user "+username);
+		}
+	}
 	
 
 }

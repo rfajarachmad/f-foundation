@@ -5,8 +5,8 @@
         .module('app')
         .factory('UserService', UserService);
 
-    UserService.$inject = ['$http','rest'];
-    function UserService($http, rest) {
+    UserService.$inject = ['$http','rest','AuthenticationService'];
+    function UserService($http, rest, AuthenticationService) {
         var service = {};
 
         service.GetAll = GetAll;
@@ -14,7 +14,7 @@
         service.GetByUsername = GetByUsername;
         service.Create = Create;
         service.Update = Update;
-        service.Delete = Delete;
+       /* service.Delete = Delete;*/
 
         return service;
 
@@ -31,16 +31,17 @@
         }
 
         function Create(user) {
-            return $http.post(rest.contextPath+'/registration/register', user).then(handleSuccess, handleError('Error creating user'));
+            user.password = AuthenticationService.Encode(user.password);
+        	return $http.post(rest.contextPath+'/registration/register', user).then(handleSuccess, handleError);
         }
 
         function Update(user) {
             return $http.put('/api/users/' + user.id, user).then(handleSuccess, handleError('Error updating user'));
         }
 
-        function Delete(id) {
+        /*function Delete(id) {
             return $http.delete('/api/users/' + id).then(handleSuccess, handleError('Error deleting user'));
-        }
+        }*/
 
         // private functions
 
@@ -48,10 +49,8 @@
             return res.data;
         }
 
-        function handleError(error) {
-            return function () {
-                return { success: false, message: error };
-            };
+        function handleError(res) {
+        	return res.data;
         }
     }
 

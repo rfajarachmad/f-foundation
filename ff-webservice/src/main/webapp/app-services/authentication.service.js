@@ -4,14 +4,16 @@
     angular
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
-
-    AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService) {
+    
+    AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'rest'];
+    function AuthenticationService($http, $cookieStore, $rootScope, $timeout, rest) {
         var service = {};
 
         service.Login = Login;
         service.SetCredentials = SetCredentials;
         service.ClearCredentials = ClearCredentials;
+        service.Decode = Decode;
+        service.Encode = Encode;
 
         return service;
 
@@ -19,7 +21,7 @@
 
             /* Dummy authentication for testing, uses $timeout to simulate api call
              ----------------------------------------------*/
-            $timeout(function () {
+            /*$timeout(function () {
                 var response;
                 UserService.GetByUsername(username)
                     .then(function (user) {
@@ -30,14 +32,15 @@
                         }
                         callback(response);
                     });
-            }, 1000);
+            }, 1000);*/
 
             /* Use this for real authentication
              ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
+        	var encodedPassword = Base64.encode(password);
+            $http.get(rest.contextPath+'/user/authenticate/'+username+'/'+encodedPassword)
+                .success(function (response) {
+                    callback(response);
+                });
 
         }
 
@@ -60,8 +63,16 @@
             $cookieStore.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
         }
+        
+        function Decode(input) {
+        	return Base64.decode(input);
+        }
+        
+        function Encode(input) {
+        	return Base64.encode(input);
+        }
     }
-
+    
     // Base64 encoding service used by AuthenticationService
     var Base64 = {
 
